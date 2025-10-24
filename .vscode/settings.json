@@ -1,0 +1,70 @@
+{
+  // 🧱 Editor config
+  "editor.tabSize": 2,
+  "editor.detectIndentation": false,
+  "editor.formatOnSave": true,
+  "files.exclude": {
+    "node_modules": true,
+    "**/dist": true,
+    "**/.turbo": true,
+    "**/.next": true
+  },
+
+  // 🔍 Search
+  "search.exclude": {
+    "package-lock.json": true,
+    "**/node_modules": true,
+    "**/dist": true
+  },
+
+  // ⚡️ Default formatter
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+
+  // 🚀 Code actions on save
+  "editor.codeActionsOnSave": {
+    "source.addMissingImports": "explicit",
+    "source.sortMembers": "explicit",
+    "source.fixAll.eslint": "explicit",
+    "source.organizeImports": "explicit"
+  },
+
+  // 🧩 Prettier config
+  "prettier.ignorePath": ".gitignore",
+  "prettier.configPath": ".prettierrc.json",
+  "prettier.requireConfig": true,
+
+  // 💡 ESLint integration
+  "eslint.validate": ["typescript", "typescriptreact", "javascript", "javascriptreact"],
+  "eslint.workingDirectories": [{ "mode": "auto" }],
+  "eslint.useFlatConfig": true,
+  "eslint.rules.customizations": [{ "rule": "*", "severity": "warn" }],
+
+  // 🧠 TypeScript workspace version
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "typescript.enablePromptUseWorkspaceTsdk": true,
+
+  // 🧪 Jest
+  "jest.autoRun": {
+    "watch": false
+  },
+  "jest.showCoverageOnLoad": true,
+  "jest.autoRevealOutput": "on-exec-error",
+
+  // ✨ Language-specific formatters
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[json][jsonc][yaml]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+
+  // 🧵 Emmet
+  "emmet.includeLanguages": {
+    "postcss": "css",
+    "scss": "css"
+  }
+}

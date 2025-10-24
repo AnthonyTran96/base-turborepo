@@ -1,8 +1,9 @@
 import js from "@eslint/js";
 import eslintConfigPrettier from "eslint-config-prettier";
-import turboPlugin from "eslint-plugin-turbo";
+import pluginPrettier from "eslint-plugin-prettier";
+import pluginTailwindcss from "eslint-plugin-tailwindcss";
+import pluginTurbo from "eslint-plugin-turbo";
 import tseslint from "typescript-eslint";
-import onlyWarn from "eslint-plugin-only-warn";
 
 /**
  * A shared ESLint configuration for the repository.
@@ -15,18 +16,57 @@ export const config = [
   ...tseslint.configs.recommended,
   {
     plugins: {
-      turbo: turboPlugin,
+      turbo: pluginTurbo,
+      tailwindcss: pluginTailwindcss,
+      prettier: pluginPrettier,
     },
+    settings: {
+      tailwindcss: {
+        callees: ["clsx", "classnames"],
+      },
+    },
+    ignores: [
+      "dist/**",
+      "build/**",
+      ".next/**",
+      "node_modules/**",
+      ".turbo/**",
+      "coverage/**",
+    ],
     rules: {
+      // ⚙️ TypeScript rules
+      "@typescript-eslint/no-unused-vars": [
+        "error",
+        {
+          argsIgnorePattern: "^_",
+          varsIgnorePattern: "^_",
+        },
+      ],
+
+      // ⚙️ Turbo monorepo rules
       "turbo/no-undeclared-env-vars": "warn",
+
+      // ⚙️ TailwindCSS rules
+      "tailwindcss/classnames-order": "warn",
+      "tailwindcss/no-custom-classname": "off",
+
+      // ⚙️ Common JS/TS rules
+      "no-console": "warn",
+      "no-debugger": "warn",
+
+       // ⚙️ Prettier rule — để ESLint check định dạng theo .prettierrc
+       "prettier/prettier": [
+        "warn",
+        {
+          bracketSpacing: true,
+          printWidth: 100,
+          singleQuote: true,
+          trailingComma: "none",
+          tabWidth: 2,
+          useTabs: false,
+          plugins: ["prettier-plugin-tailwindcss"],
+        },
+      ],
     },
-  },
-  {
-    plugins: {
-      onlyWarn,
-    },
-  },
-  {
-    ignores: ["dist/**"],
   },
 ];
