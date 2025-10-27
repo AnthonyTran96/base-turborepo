@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/prefer-promise-reject-errors */
 import { ENVConfig } from '@/config/env';
 import { ROUTES } from '@/config/routes';
 import { ApiResponse } from '@/types/common';
