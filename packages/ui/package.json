@@ -25,9 +25,12 @@
   },
   "license": "MIT",
   "scripts": {
-    "build:components": "tsc",
+    "dev": "tsc --watch",
+    "dev:mock": "tsc --watch",
+    "build": "tsc",
+    "build:dev": "tsc",
+    "build:prod": "tsc",
     "check-types": "tsc --noEmit",
-    "dev:components": "tsc --watch",
     "lint": "eslint src"
   },
   "peerDependencies": {

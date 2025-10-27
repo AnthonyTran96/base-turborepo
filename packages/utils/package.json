@@ -9,9 +9,12 @@
   "sideEffects": false,
   "license": "MIT",
   "scripts": {
-    "build": "tsc",
-    "check-types": "tsc --noEmit",
     "dev": "tsc --watch",
+    "dev:mock": "tsc --watch",
+    "build": "tsc",
+    "build:dev": "tsc",
+    "build:prod": "tsc",
+    "check-types": "tsc --noEmit",
     "lint": "eslint src"
   },
   "exports": {
@@ -25,6 +28,7 @@
     }
   },
   "peerDependencies": {
+    "react": "^19",
     "moment": "^2.30.1"
   },
   "devDependencies": {

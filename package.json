@@ -2,8 +2,12 @@
   "name": "with-tailwind",
   "private": true,
   "scripts": {
-    "build": "turbo run build",
     "dev": "turbo run dev",
+    "dev:mock": "turbo run dev:mock",
+    "build": "turbo run build",
+    "build:dev": "turbo run build:dev",
+    "build:prod": "turbo run build:prod",
+    "start": "turbo run start",
     "lint": "turbo run lint",
     "check-types": "turbo run check-types",
     "format": "prettier --write \"**/*.{ts,tsx,md}\""

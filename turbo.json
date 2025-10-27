@@ -16,6 +16,23 @@
     "dev": {
       "cache": false,
       "persistent": true
+    },
+    "dev:mock": {
+      "cache": false,
+      "persistent": true
+    },
+    "build:dev": {
+      "dependsOn": ["^build:dev"],
+      "inputs": ["$TURBO_DEFAULT$", ".env*"],
+      "outputs": ["dist/**", ".next/**", "!.next/cache/**"]
+    },
+    "build:prod": {
+      "dependsOn": ["^build:prod"],
+      "inputs": ["$TURBO_DEFAULT$", ".env*"],
+      "outputs": ["dist/**", ".next/**", "!.next/cache/**"]
+    },
+    "start": {
+      "dependsOn": ["^start"]
     }
   }
 }
