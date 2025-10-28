@@ -9,7 +9,8 @@
   ],
   "files": [
     "dist",
-    "src/**/*.scss"
+    "src/**/*.scss",
+    "src/assets"
   ],
   "exports": {
     ".": {
@@ -21,7 +22,8 @@
       "types": "./dist/*/index.d.ts"
     },
     "./styles": "./src/styles/index.scss",
-    "./styles/*": "./src/styles/*"
+    "./styles/*": "./src/styles/*",
+    "./assets/*": "./src/assets/*"
   },
   "license": "MIT",
   "scripts": {
@@ -35,6 +37,7 @@
   },
   "peerDependencies": {
     "react": "^19",
+    "next": "^15.4.2",
     "antd": "^5.23.1",
     "@repo/utils": "*",
     "moment": "^2.30.1"

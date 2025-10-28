@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-constant-condition */
 /* eslint-disable @typescript-eslint/ban-ts-comment */
