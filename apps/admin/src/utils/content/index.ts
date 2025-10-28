@@ -1,5 +1,7 @@
 import { common } from './common';
+import { login_screen } from './login_screen';
 
 export default {
-  common
+  common,
+  login_screen
 };

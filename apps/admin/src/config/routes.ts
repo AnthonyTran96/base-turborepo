@@ -4,9 +4,10 @@ export const ROUTES = {
 
   // UN-AUTHENTICATION
   LOGIN: '/login',
-  CHECK_MAIL: '/check-mail',
-  FORGOT_PASSWORD: '/forgot-password',
-  REGISTER: '/register',
+  CHANGE_PASSWORD: '/change-password',
+
+  // AUTHENTICATION
+  SAMPLE_PAGE: '/sample-page',
 
   // MAINTENANCE
   MAINTENANCE_404: '/maintenance/404',
@@ -15,8 +16,5 @@ export const ROUTES = {
   MAINTENANCE_UNDER_CONSTRUCTION: '/maintenance/under-construction',
 
   // CONTACT_US
-  CONTACT_US: '/contact-us',
-
-  // SAMPLE_PAGE
-  SAMPLE_PAGE: '/sample-page'
+  CONTACT_US: '/contact-us'
 };

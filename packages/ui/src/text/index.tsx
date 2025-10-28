@@ -23,7 +23,7 @@ interface TextProps {
     | 'caption1'
     | 'caption2'
     | 'caption3';
-  className: string;
+  className?: string;
   onClick?: () => void;
   children?: React.ReactNode;
   style?: CSSProperties;

@@ -53,7 +53,7 @@ const ButtonBase = (props: IdPropButton) => {
       onClick={onClick}
       style={{ height: size, fontSize, ...styles }}
       disabled={disabled}
-      className={`btn_base btn_${type} ${baseClassName}`}
+      className={`btn_base btn_${type} ${className}`}
     >
       {leftIcon && (
         <div className={content ? 'mr-8' : ''}>
@@ -72,7 +72,7 @@ const ButtonBase = (props: IdPropButton) => {
           />
         </div>
       )}
-      <span className={className}>{content}</span>
+      <span className={baseClassName}>{content}</span>
       {rightIcon && (
         <div className={content ? 'ml-8' : ''}>
           <Image

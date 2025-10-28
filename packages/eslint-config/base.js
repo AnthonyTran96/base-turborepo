@@ -41,7 +41,7 @@ export const config = [
       'turbo/no-undeclared-env-vars': 'warn',
 
       // ⚙️ TailwindCSS rules
-      'tailwindcss/classnames-order': 'warn',
+      'tailwindcss/classnames-order': 'off',
       'tailwindcss/no-custom-classname': 'off',
 
       // ⚙️ Common JS/TS rules

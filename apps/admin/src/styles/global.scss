@@ -1,5 +1,5 @@
-@use "@repo/tailwind-config/shared-styles" as *;
-@use "@repo/ui/styles" as *;
+@use '@repo/tailwind-config/shared-styles' as *;
+@use '@repo/ui/styles' as *;
 
 @tailwind base;
 @tailwind components;
@@ -25,4 +25,8 @@ html {
 ::-webkit-scrollbar-thumb {
   border-radius: 4px;
   background: rgb(var(--color-400));
+}
+
+.auth-bg {
+  background-image: url('../assets/images/auth-bg.jpg');
 }

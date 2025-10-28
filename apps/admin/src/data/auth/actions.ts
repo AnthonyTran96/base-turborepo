@@ -1,6 +1,6 @@
 import { ChangePasswordParams, LoginParams, LoginResult, ProfileResult } from '@/model/auth';
 import authServices from '@/services/auth-services';
-import { message } from 'antd';
+import { showToast, TYPE_TOAST } from '@repo/ui/toast';
 import { mutate } from 'swr';
 import { userActions } from '../user/actions';
 import { AUTH_KEY, initialAuth } from './types';
@@ -17,7 +17,7 @@ const login = async (
   const result = await authServices.login(body);
 
   if (!result.success || !result.data) {
-    message.error(result.message);
+    showToast({ type: TYPE_TOAST.ERROR, content: result.message });
     if (onFailed) onFailed();
     return;
   }
@@ -35,7 +35,7 @@ const changePassword = async (
   const result = await authServices.changePassword(body);
 
   if (!result.success) {
-    message.error(result.message);
+    showToast({ type: TYPE_TOAST.ERROR, content: result.message });
     if (onFailed) onFailed();
     return;
   }
@@ -47,7 +47,7 @@ const getProfile = async (onSuccess?: (data: ProfileResult) => void, onFailed?: 
   const result = await authServices.getProfile();
 
   if (!result.success || !result.data) {
-    message.error(result.message);
+    // showToast({ type: TYPE_TOAST.ERROR, content: result.message });
     if (onFailed) onFailed();
     return;
   }
@@ -61,7 +61,7 @@ const logout = async (onSuccess?: () => void, onFailed?: () => void) => {
   const result = await authServices.logout();
 
   if (!result.success) {
-    message.error(result.message);
+    showToast({ type: TYPE_TOAST.ERROR, content: result.message });
     if (onFailed) onFailed();
     return;
   }

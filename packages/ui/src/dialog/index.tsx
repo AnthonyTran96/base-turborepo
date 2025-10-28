@@ -1,4 +1,3 @@
-/* eslint-disable tailwindcss/classnames-order */
 'use client';
 import { Modal } from 'antd';
 import type { ReactNode } from 'react';

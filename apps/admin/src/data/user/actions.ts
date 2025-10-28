@@ -1,6 +1,6 @@
 import { ChangePasswordParams, CreateUserParams, UpdateUserParams, User } from '@/model/user';
 import userServices from '@/services/user-services';
-import { message } from 'antd';
+import { showToast, TYPE_TOAST } from '@repo/ui/toast';
 import { mutate } from 'swr';
 import { initialUser, USER_KEY, UserState } from './types';
 
@@ -16,7 +16,7 @@ const getUser = async (id: number, onSuccess?: (data: User) => void, onFailed?: 
   const result = await userServices.getUser(id);
 
   if (!result.success || !result.data) {
-    message.error(result.message);
+    showToast({ type: TYPE_TOAST.ERROR, content: result.message });
     if (onFailed) onFailed();
     return;
   }
@@ -34,12 +34,12 @@ const createUser = async (
   const result = await userServices.createUser(body);
 
   if (!result.success || !result.data) {
-    message.error(result.message);
+    showToast({ type: TYPE_TOAST.ERROR, content: result.message });
     if (onFailed) onFailed();
     return;
   }
 
-  message.success(result.message);
+  showToast({ type: TYPE_TOAST.SUCCESS, content: result.message });
   const response = result.data;
   if (onSuccess) onSuccess(response);
 };
@@ -53,7 +53,7 @@ const updateUser = async (
   const result = await userServices.updateUser(id, body);
 
   if (!result.success || !result.data) {
-    message.error(result.message);
+    showToast({ type: TYPE_TOAST.ERROR, content: result.message });
     if (onFailed) onFailed();
     return;
   }
@@ -71,12 +71,12 @@ const changePassword = async (
   const result = await userServices.changePassword(body);
 
   if (!result.success) {
-    message.error(result.message);
+    showToast({ type: TYPE_TOAST.ERROR, content: result.message });
     if (onFailed) onFailed();
     return;
   }
 
-  message.success(result.message);
+  showToast({ type: TYPE_TOAST.SUCCESS, content: result.message });
   if (onSuccess) onSuccess();
 };
 
