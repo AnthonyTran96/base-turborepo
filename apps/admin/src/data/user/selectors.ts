@@ -4,7 +4,7 @@ import { initialUser, USER_KEY } from './types';
 
 export const useGetUserState = () => {
   const { data } = useSWR(USER_KEY, () => initialUser, {
-    // fallbackData: initialUser,
+    fallbackData: initialUser,
     revalidateIfStale: false,
     revalidateOnFocus: false,
     revalidateOnReconnect: false

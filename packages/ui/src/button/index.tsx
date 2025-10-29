@@ -1,3 +1,4 @@
+import type { StaticImageData } from 'next/image';
 import Image from 'next/image';
 import React from 'react';
 
@@ -8,9 +9,9 @@ export interface IdPropButton {
   disabled?: boolean;
   heightIcon?: number;
   htmlType?: HTMLButtonElement['type'];
-  leftIcon?: string;
+  leftIcon?: string | StaticImageData;
   onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
-  rightIcon?: string;
+  rightIcon?: string | StaticImageData;
   fontSize?: number;
   size?: 44 | 32;
   styles?: React.CSSProperties;
@@ -79,7 +80,7 @@ const ButtonBase = (props: IdPropButton) => {
             src={rightIcon}
             height={heightIcon}
             width={widthIcon}
-            alt="icon"
+            alt="ICON"
             className={disabled ? '!text-color-600' : ''}
           />
         </div>

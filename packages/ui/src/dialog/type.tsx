@@ -1,3 +1,4 @@
+import type { StaticImageData } from 'next/image';
 import type { ReactNode } from 'react';
 
 export enum TYPE_MESSAGE {
@@ -21,8 +22,8 @@ export interface ActionProps {
   type?: TYPE_ACTION;
   typeMessage?: TYPE_MESSAGE;
   index?: number;
-  iconLeftName?: string;
-  iconRightName?: string;
+  iconLeftName?: string | StaticImageData;
+  iconRightName?: string | StaticImageData;
   className?: string;
   stopHide?: boolean;
 }

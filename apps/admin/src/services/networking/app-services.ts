@@ -24,14 +24,15 @@ function getAppServices() {
   );
 
   appServices.interceptors.response.use(
-    (response) => response,
+    (response) => response.data,
     (error: AxiosError<{ message?: string }>) => {
       if (!error.response) {
         return Promise.reject(error);
       }
       if (
         [401, 403].includes(error.response.status) &&
-        !window.location.href.includes(ROUTES.LOGIN)
+        !window.location.href.includes(ROUTES.LOGIN) &&
+        !window.location.href.includes(ROUTES.CHANGE_PASSWORD)
       ) {
         window.location.pathname = ROUTES.LOGIN;
       }
