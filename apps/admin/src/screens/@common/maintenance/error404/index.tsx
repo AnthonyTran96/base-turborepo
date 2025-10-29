@@ -1,22 +1,15 @@
 import { ROUTES } from '@/config/routes';
-import ERROR_404 from '@repo/ui/assets/images/maintenance/img-error-404.svg';
 import ButtonBase from '@repo/ui/button';
 import { TextBase } from '@repo/ui/text';
-import Image from 'next/image';
 import Link from 'next/link';
+import ErrorImage from './image';
 
 const Error404Page = () => {
   return (
     <div className="flex size-full items-center justify-center">
       <div className="flex flex-col items-center gap-8">
         <div className="mb-16 w-[300px]">
-          <Image
-            src={ERROR_404}
-            alt="ERROR_404"
-            height={370}
-            width={396}
-            className="h-auto max-w-full"
-          />
+          <ErrorImage />
         </div>
         <TextBase
           text="Page Not Found"

@@ -21,7 +21,8 @@
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "antd": "^5.23.1",
-    "@ant-design/nextjs-registry": "^1.0.2"
+    "@ant-design/nextjs-registry": "^1.0.2",
+    "@svgr/webpack": "^8.1.0"
   },
   "devDependencies": {
     "@next/eslint-plugin-next": "^15.4.6",

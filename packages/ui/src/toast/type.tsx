@@ -1,6 +1,6 @@
 import type { NotificationPlacement } from 'antd/es/notification/interface';
-import type { ImageProps } from 'next/image';
 import type React from 'react';
+import type { IconSvgLocalProps } from '../icon-vec-local/type';
 
 export enum TYPE_TOAST {
   INFO = 'info',
@@ -16,7 +16,7 @@ export interface ToastProps {
   content: string;
   wrapClassName?: string;
   timeShow?: number;
-  icon?: ImageProps;
+  icon?: IconSvgLocalProps;
   placement?: NotificationPlacement;
   styleToast?: React.CSSProperties;
 }

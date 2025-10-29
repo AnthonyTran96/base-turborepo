@@ -1,12 +1,7 @@
 'use client';
-import ICON_CHECK_GREEN from '@repo/ui/assets/svg/ic_check_green.svg';
-import ICON_CLOSE_TAKE_NOTE from '@repo/ui/assets/svg/ic_close_take_note.svg';
-import ICON_ERROR from '@repo/ui/assets/svg/ic_error.svg';
-import ICON_INFO_SOLID from '@repo/ui/assets/svg/ic_info_solid.svg';
-import ICON_WARNING from '@repo/ui/assets/svg/ic_warning.svg';
-import { notification } from 'antd';
-import Image from 'next/image';
+import notification from 'antd/es/notification';
 import { createRef, forwardRef, useImperativeHandle } from 'react';
+import { IconSvgLocal } from '../icon-vec-local';
 import type { ToastProps } from './type';
 import { TYPE_TOAST } from './type';
 
@@ -18,69 +13,43 @@ function handleToastContent(props: ToastProps) {
 
 function handleToastIcon(props: ToastProps) {
   if (props.icon) {
-    return <Image {...props.icon} />;
+    return (
+      <IconSvgLocal
+        name={props.icon.name}
+        fill={props.icon.fill}
+        height={props.icon.height}
+        width={props.icon.width}
+      />
+    );
   }
 
   switch (props.type) {
     case TYPE_TOAST.INFO:
       return (
-        <Image
-          src={ICON_INFO_SOLID}
-          alt="ICON_INFO_SOLID"
-          className="text-link-600"
-          height={24}
-          width={24}
-        />
+        <IconSvgLocal name="ICON_INFO_SOLID" fill="rgb(var(--link-600))" height={24} width={24} />
       );
     case TYPE_TOAST.SUCCESS:
       return (
-        <Image
-          src={ICON_CHECK_GREEN}
-          alt="ICON_CHECK_GREEN"
-          className="text-color-50"
-          height={24}
-          width={24}
-        />
+        <IconSvgLocal name="ICON_CHECK_GREEN" fill="rgb(var(--color-50))" height={24} width={24} />
       );
     case TYPE_TOAST.WARNING:
       return (
-        <Image
-          src={ICON_WARNING}
-          alt="ICON_WARNING"
-          className="text-pending-600"
-          height={24}
-          width={24}
-        />
+        <IconSvgLocal name="ICON_WARNING" fill="rgb(var(--pending-600))" height={24} width={24} />
       );
     case TYPE_TOAST.ERROR:
-      return (
-        <Image
-          src={ICON_ERROR}
-          alt="ICON_ERROR"
-          className="text-error-600"
-          height={24}
-          width={24}
-        />
-      );
+      return <IconSvgLocal name="ICON_ERROR" fill="rgb(var(--error-600))" height={24} width={24} />;
     case TYPE_TOAST.ERROR2:
       return (
-        <Image
-          src={ICON_CLOSE_TAKE_NOTE}
-          alt="ICON_CLOSE_TAKE_NOTE"
-          className="text-error-600"
+        <IconSvgLocal
+          name="ICON_CLOSE_TAKE_NOTE"
+          fill="rgb(var(--error-600))"
           height={24}
           width={24}
         />
       );
     case TYPE_TOAST.DARK:
       return (
-        <Image
-          src={ICON_INFO_SOLID}
-          alt="ICON_INFO_SOLID"
-          className="text-color-50"
-          height={24}
-          width={24}
-        />
+        <IconSvgLocal name="ICON_INFO_SOLID" fill="rgb(var(--color-50))" height={24} width={24} />
       );
     default:
       return null;

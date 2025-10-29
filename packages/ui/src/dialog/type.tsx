@@ -1,5 +1,5 @@
-import type { StaticImageData } from 'next/image';
 import type { ReactNode } from 'react';
+import type { IconSvgTypes } from '../assets/svg';
 
 export enum TYPE_MESSAGE {
   ALERT = 'alert',
@@ -22,14 +22,14 @@ export interface ActionProps {
   type?: TYPE_ACTION;
   typeMessage?: TYPE_MESSAGE;
   index?: number;
-  iconLeftName?: string | StaticImageData;
-  iconRightName?: string | StaticImageData;
+  iconLeftName?: IconSvgTypes;
+  iconRightName?: IconSvgTypes;
   className?: string;
   stopHide?: boolean;
 }
 
 export interface ImageProps {
-  name: string;
+  name: IconSvgTypes;
   width?: number;
   height: number;
 }
@@ -45,6 +45,7 @@ export interface DialogProps {
   disableTouchOutSide?: boolean;
   onHideOutside?: () => void;
   classNameFooter?: string;
+  destroyOnClose?: boolean;
 }
 
 interface StateType extends DialogProps {
@@ -58,5 +59,6 @@ export const stateDefault: StateType = {
   isShow: false,
   actions: undefined,
   contentComponent: undefined,
-  disableTouchOutSide: false
+  disableTouchOutSide: false,
+  destroyOnClose: undefined
 };

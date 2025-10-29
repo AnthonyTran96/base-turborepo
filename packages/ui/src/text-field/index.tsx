@@ -1,11 +1,9 @@
-import ICON_EYE_OPEN from '@repo/ui/assets/svg/eye-open.svg';
-import ICON_EYE_SPLASH from '@repo/ui/assets/svg/eye-splash.svg';
-import type { InputProps, InputRef } from 'antd';
-import { Input } from 'antd';
-import Image from 'next/image';
+import type { InputProps, InputRef } from 'antd/es/input';
+import Input from 'antd/es/input';
 import type { Ref } from 'react';
 import React, { forwardRef } from 'react';
 import AppHelperText from '../helper-text';
+import { IconSvgLocal } from '../icon-vec-local';
 
 export interface AppTextFieldProps extends InputProps {
   label?: React.ReactNode;
@@ -43,11 +41,10 @@ export const AppTextField = forwardRef((props: AppTextFieldProps, ref: Ref<Input
   };
   const renderPasswordSuffix = (visible: boolean) => (
     <div>
-      <Image
-        src={visible ? ICON_EYE_SPLASH : ICON_EYE_OPEN}
-        alt="ICON"
+      <IconSvgLocal
+        name={visible ? 'ICON_EYE_SPLASH' : 'ICON_EYE_OPEN'}
         height={20}
-        className="!text-color-700"
+        fill="rgb(var(--color-700)"
       />
     </div>
   );

@@ -1,8 +1,8 @@
-'use client';
 import { AntdRegistry } from '@ant-design/nextjs-registry';
 import { DialogView } from '@repo/ui/dialog';
 import { ToastView } from '@repo/ui/toast';
-import { ConfigProvider, theme } from 'antd';
+import ConfigProvider from 'antd/es/config-provider';
+import theme from 'antd/es/theme';
 import { ReactElement } from 'react';
 
 // ==============================|| PROVIDER WRAPPER  ||============================== //

@@ -2,7 +2,7 @@
 import content from '@/utils/content';
 import ButtonBase from '@repo/ui/button';
 import { AppTextFieldControl } from '@repo/ui/text-field/client';
-import { Spin } from 'antd';
+import Spin from 'antd/es/spin';
 import useLogin from '../hooks/useLogin';
 
 const LoginForm = () => {

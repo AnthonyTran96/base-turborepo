@@ -1,5 +1,5 @@
 'use client';
-import { Modal } from 'antd';
+import Modal from 'antd/es/modal';
 import type { ReactNode } from 'react';
 import {
   createRef,
@@ -91,6 +91,7 @@ const ComponentDialog = forwardRef((_: unknown, ref) => {
       closeIcon={false}
       footer={null}
       wrapClassName="highest-dialog dialog"
+      destroyOnHidden={state?.destroyOnClose}
     >
       <div className="duration-500">
         <div className="text-18 text-text-primary tablet:text-center font-bold">{state.title}</div>

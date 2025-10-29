@@ -2,7 +2,6 @@ import { ROUTES } from '@/config/routes';
 import ERROR_500 from '@repo/ui/assets/images/maintenance/img-error-500.svg';
 import ButtonBase from '@repo/ui/button';
 import { TextBase } from '@repo/ui/text';
-import Image from 'next/image';
 import Link from 'next/link';
 
 const Error500Page = () => {
@@ -10,13 +9,7 @@ const Error500Page = () => {
     <div className="flex size-full items-center justify-center">
       <div className="flex flex-col items-center gap-8">
         <div className="mb-16 w-[300px]">
-          <Image
-            src={ERROR_500}
-            alt="ERROR_500"
-            height={370}
-            width={396}
-            className="h-auto max-w-full"
-          />
+          <ERROR_500 name="ERROR_500" height={370} width={396} className="h-auto max-w-full" />
         </div>
         <TextBase
           text="Internal Server Error"

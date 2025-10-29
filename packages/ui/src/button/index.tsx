@@ -1,6 +1,6 @@
-import type { StaticImageData } from 'next/image';
-import Image from 'next/image';
 import React from 'react';
+import type { IconSvgTypes } from '../assets/svg';
+import { IconSvgLocal } from '../icon-vec-local';
 
 export interface IdPropButton {
   className?: string;
@@ -9,9 +9,9 @@ export interface IdPropButton {
   disabled?: boolean;
   heightIcon?: number;
   htmlType?: HTMLButtonElement['type'];
-  leftIcon?: string | StaticImageData;
+  leftIcon?: IconSvgTypes;
   onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
-  rightIcon?: string | StaticImageData;
+  rightIcon?: IconSvgTypes;
   fontSize?: number;
   size?: 44 | 32;
   styles?: React.CSSProperties;
@@ -37,6 +37,16 @@ const ButtonBase = (props: IdPropButton) => {
     customContent
   } = props;
   const content = text || customContent;
+  // const [hoveredItem, setHoveredItem] = useState('');
+
+  // const updateImageState = () => {
+  //   if (disabled) {
+  //     return 'rgb(var(--color-600)';
+  //   }
+  //   return hoveredItem && (type === 'secondary' || type === 'whiteGhost')
+  //     ? 'rgb(var(--primary-700)'
+  //     : '';
+  // };
 
   let baseClassName = '';
 
@@ -55,33 +65,27 @@ const ButtonBase = (props: IdPropButton) => {
       style={{ height: size, fontSize, ...styles }}
       disabled={disabled}
       className={`btn_base btn_${type} ${className}`}
+      // onMouseEnter={() => setHoveredItem('rgb(var(--color-700)')}
+      // onMouseLeave={() => setHoveredItem('')}
     >
       {leftIcon && (
         <div className={content ? 'mr-8' : ''}>
-          <Image
-            src={leftIcon}
+          <IconSvgLocal
+            name={leftIcon}
             height={heightIcon}
             width={widthIcon}
-            alt="icon"
-            className={
-              disabled
-                ? '!text-color-600'
-                : type === 'secondary' || type === 'whiteGhost'
-                  ? 'hover:!text-primary-700'
-                  : ''
-            }
+            fill={disabled ? 'rgb(var(--color-600)' : ''}
           />
         </div>
       )}
       <span className={baseClassName}>{content}</span>
       {rightIcon && (
         <div className={content ? 'ml-8' : ''}>
-          <Image
-            src={rightIcon}
+          <IconSvgLocal
+            name={rightIcon}
             height={heightIcon}
             width={widthIcon}
-            alt="ICON"
-            className={disabled ? '!text-color-600' : ''}
+            fill={disabled ? 'rgb(var(--color-600)' : ''}
           />
         </div>
       )}
