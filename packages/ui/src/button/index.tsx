@@ -9,9 +9,9 @@ export interface IdPropButton {
   disabled?: boolean;
   heightIcon?: number;
   htmlType?: HTMLButtonElement['type'];
-  leftIcon?: IconSvgTypes;
+  leftIcon?: IconSvgTypes | React.ReactNode;
   onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
-  rightIcon?: IconSvgTypes;
+  rightIcon?: IconSvgTypes | React.ReactNode;
   fontSize?: number;
   size?: 44 | 32;
   styles?: React.CSSProperties;
@@ -70,23 +70,31 @@ const ButtonBase = (props: IdPropButton) => {
     >
       {leftIcon && (
         <div className={content ? 'mr-8' : ''}>
-          <IconSvgLocal
-            name={leftIcon}
-            height={heightIcon}
-            width={widthIcon}
-            fill={disabled ? 'rgb(var(--color-600)' : ''}
-          />
+          {typeof leftIcon === 'string' ? (
+            <IconSvgLocal
+              name={leftIcon as IconSvgTypes}
+              height={heightIcon}
+              width={widthIcon}
+              fill={disabled ? 'rgb(var(--color-600)' : ''}
+            />
+          ) : (
+            leftIcon
+          )}
         </div>
       )}
       <span className={baseClassName}>{content}</span>
       {rightIcon && (
         <div className={content ? 'ml-8' : ''}>
-          <IconSvgLocal
-            name={rightIcon}
-            height={heightIcon}
-            width={widthIcon}
-            fill={disabled ? 'rgb(var(--color-600)' : ''}
-          />
+          {typeof rightIcon === 'string' ? (
+            <IconSvgLocal
+              name={rightIcon as IconSvgTypes}
+              height={heightIcon}
+              width={widthIcon}
+              fill={disabled ? 'rgb(var(--color-600)' : ''}
+            />
+          ) : (
+            rightIcon
+          )}
         </div>
       )}
     </button>

@@ -2,6 +2,7 @@ import React from 'react';
 import type { IconSvgTypes } from '../../assets/svg';
 import { IconSvgLocal } from '../../icon-vec-local';
 import WrapStyle from '../../wrap-style';
+import { IconArrowLeft } from './images';
 
 export interface BaseBackPageProps {
   icon?: IconSvgTypes | React.ReactNode;
@@ -14,7 +15,7 @@ export interface BaseBackPageProps {
 }
 
 const BaseBackPage = ({
-  icon = 'ICON_ARROW_LEFT',
+  icon = <IconArrowLeft />,
   iconWidth = 24,
   iconHeight = 24,
   title,
@@ -36,7 +37,7 @@ const BaseBackPage = ({
           height={iconHeight}
         />
       ) : (
-        <div>{icon}</div>
+        icon
       )}
       {title && (
         <WrapStyle baseClass="text-18 font-bold leading-24 text-color-900" customStyle={titleStyle}>

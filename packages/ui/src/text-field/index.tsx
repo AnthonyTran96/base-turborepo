@@ -1,9 +1,13 @@
+'use client';
+import ICON_EYE_OPEN from '@repo/ui/assets/svg/eye-open.svg';
+import ICON_EYE_SPLASH from '@repo/ui/assets/svg/eye-splash.svg';
 import type { InputProps, InputRef } from 'antd/es/input';
 import Input from 'antd/es/input';
 import type { Ref } from 'react';
 import React, { forwardRef } from 'react';
+import type { Control, FieldValues, Path } from 'react-hook-form';
+import { useController } from 'react-hook-form';
 import AppHelperText from '../helper-text';
-import { IconSvgLocal } from '../icon-vec-local';
 
 export interface AppTextFieldProps extends InputProps {
   label?: React.ReactNode;
@@ -14,6 +18,13 @@ export interface AppTextFieldProps extends InputProps {
   type?: 'text' | 'password' | 'number';
   error?: string;
   classNameMore?: string;
+}
+
+export interface AppTextFieldControlProps<T extends FieldValues>
+  extends Omit<AppTextFieldProps, 'error'> {
+  name: Path<T>;
+  control: Control<T>;
+  customError?: string | null;
 }
 
 export const AppTextField = forwardRef((props: AppTextFieldProps, ref: Ref<InputRef>) => {
@@ -41,11 +52,11 @@ export const AppTextField = forwardRef((props: AppTextFieldProps, ref: Ref<Input
   };
   const renderPasswordSuffix = (visible: boolean) => (
     <div>
-      <IconSvgLocal
-        name={visible ? 'ICON_EYE_SPLASH' : 'ICON_EYE_OPEN'}
-        height={20}
-        fill="rgb(var(--color-700)"
-      />
+      {visible ? (
+        <ICON_EYE_SPLASH height={20} fill="rgb(var(--color-700)" />
+      ) : (
+        <ICON_EYE_OPEN height={20} fill="rgb(var(--color-700)" />
+      )}
     </div>
   );
   return (
@@ -84,3 +95,22 @@ export const AppTextField = forwardRef((props: AppTextFieldProps, ref: Ref<Input
 });
 
 AppTextField.displayName = 'AppTextField';
+
+export function AppTextFieldControl<T extends FieldValues>({
+  name,
+  control,
+  customError,
+  ...restProps
+}: AppTextFieldControlProps<T>) {
+  const {
+    field,
+    fieldState: { error }
+  } = useController({ name, control });
+  return (
+    <AppTextField
+      {...field}
+      {...restProps}
+      error={customError === null ? undefined : customError || error?.message}
+    />
+  );
+}
