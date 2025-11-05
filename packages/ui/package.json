@@ -9,7 +9,8 @@
   ],
   "files": [
     "dist",
-    "src/**/*.scss"
+    "src/**/*.scss",
+    "src/assets"
   ],
   "exports": {
     ".": {
@@ -21,18 +22,26 @@
       "types": "./dist/*/index.d.ts"
     },
     "./styles": "./src/styles/index.scss",
-    "./styles/*": "./src/styles/*"
+    "./styles/*": "./src/styles/*",
+    "./assets/*": "./src/assets/*"
   },
   "license": "MIT",
   "scripts": {
-    "build:components": "tsc",
+    "dev": "tsc --watch",
+    "dev:mock": "tsc --watch",
+    "build": "tsc",
+    "build:dev": "tsc",
+    "build:prod": "tsc",
     "check-types": "tsc --noEmit",
-    "dev:components": "tsc --watch",
-    "lint": "eslint src --max-warnings 0"
+    "lint": "eslint src"
   },
   "peerDependencies": {
     "react": "^19",
-    "antd": "^5.23.1"
+    "next": "^15.4.2",
+    "antd": "^5.23.1",
+    "@repo/utils": "*",
+    "moment": "^2.30.1",
+    "react-hook-form": "^7.54.2"
   },
   "devDependencies": {
     "@repo/eslint-config": "*",

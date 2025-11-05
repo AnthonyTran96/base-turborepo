@@ -1,0 +1,40 @@
+{
+  "name": "@repo/utils",
+  "version": "0.0.0",
+  "types": "./dist/index.d.ts",
+  "main": "./dist/index.js",
+  "files": [
+    "dist"
+  ],
+  "sideEffects": false,
+  "license": "MIT",
+  "scripts": {
+    "dev": "tsc --watch",
+    "dev:mock": "tsc --watch",
+    "build": "tsc",
+    "build:dev": "tsc",
+    "build:prod": "tsc",
+    "check-types": "tsc --noEmit",
+    "lint": "eslint src"
+  },
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./*": {
+      "import": "./dist/*/index.js",
+      "types": "./dist/*/index.d.ts"
+    }
+  },
+  "peerDependencies": {
+    "react": "^19",
+    "moment": "^2.30.1"
+  },
+  "devDependencies": {
+    "@repo/eslint-config": "*",
+    "@repo/typescript-config": "*",
+    "eslint": "^9.33.0",
+    "typescript": "5.9.2"
+  }
+}
