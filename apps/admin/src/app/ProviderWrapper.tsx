@@ -20,9 +20,9 @@ const ProviderWrapper = ({ children }: { children: ReactElement }) => {
         }}
       >
         {children}
+        <ToastView />
+        <DialogView />
       </ConfigProvider>
-      <ToastView />
-      <DialogView />
     </AntdRegistry>
   );
 };

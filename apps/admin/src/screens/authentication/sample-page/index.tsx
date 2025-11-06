@@ -7,6 +7,7 @@ import ProgressBar, { TypeProgressBar } from '@repo/ui/progressbar';
 import Status, { KIND_STATUS, TYPE_STATUS } from '@repo/ui/status';
 import NameText from './components/NameText';
 import OpenDialog from './components/OpenDialog';
+import OpenToast from './components/OpenToast';
 import UserInfo from './components/UserInfo';
 
 const SamplePagePage = () => {
@@ -83,6 +84,7 @@ const SamplePagePage = () => {
       </div>
       <IconSvgLocal name="ICON_EDIT" width={100} height={100} />
       <OpenDialog />
+      <OpenToast />
       <ProgressBar
         stepTitles={['buoc 1', 'buoc 2', 'buoc 3', 'buoc 4', 'buoc 5']}
         className="py-12"
