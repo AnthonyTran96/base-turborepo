@@ -36,6 +36,7 @@
     "lint": "eslint src"
   },
   "peerDependencies": {
+    "@ant-design/v5-patch-for-react-19": "^1.0.3",
     "react": "^19",
     "next": "^15.4.2",
     "antd": "^5.23.1",

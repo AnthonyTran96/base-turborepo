@@ -1,4 +1,5 @@
 import { AntdRegistry } from '@ant-design/nextjs-registry';
+import '@ant-design/v5-patch-for-react-19';
 import { DialogView } from '@repo/ui/dialog';
 import { ToastView } from '@repo/ui/toast';
 import ConfigProvider from 'antd/es/config-provider';
@@ -19,9 +20,9 @@ const ProviderWrapper = ({ children }: { children: ReactElement }) => {
         }}
       >
         {children}
+        <ToastView />
+        <DialogView />
       </ConfigProvider>
-      <ToastView />
-      <DialogView />
     </AntdRegistry>
   );
 };

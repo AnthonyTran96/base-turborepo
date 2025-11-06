@@ -1,4 +1,6 @@
 export const login_screen = {
+  title: 'Login',
+  description: 'Login Page',
   login: 'Login',
   username: 'Username',
   enter_username: 'Enter Username',

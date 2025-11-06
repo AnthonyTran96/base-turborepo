@@ -12,19 +12,19 @@ const nextConfig: NextConfig = {
       transform: 'antd/es/{{member}}'
     }
   },
-  turbopack: {
-    rules: {
-      '*.svg': {
-        loaders: [
-          {
-            loader: '@svgr/webpack',
-            options: { dimensions: false }
-          }
-        ],
-        as: '*.js'
-      }
-    }
-  },
+  // turbopack: {
+  //   rules: {
+  //     '*.svg': {
+  //       loaders: [
+  //         {
+  //           loader: '@svgr/webpack',
+  //           options: { dimensions: false }
+  //         }
+  //       ],
+  //       as: '*.js'
+  //     }
+  //   }
+  // },
   webpack: (config) => {
     // config.externals.push({
     //   bufferutil: 'bufferutil',
