@@ -7,6 +7,8 @@ const nextConfig: NextConfig = {
   eslint: {
     ignoreDuringBuilds: true
   },
+  poweredByHeader: false,
+  reactStrictMode: false,
   modularizeImports: {
     antd: {
       transform: 'antd/es/{{member}}'

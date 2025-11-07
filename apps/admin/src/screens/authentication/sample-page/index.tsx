@@ -1,16 +1,21 @@
 import ButtonBase from '@repo/ui/button';
 import AppCheckbox from '@repo/ui/checkbox';
+import { AppDatePicker } from '@repo/ui/date-picker';
 import { IconSvgLocal } from '@repo/ui/icon-vec-local';
 import InfoBox from '@repo/ui/infobox';
 import LinearProgress from '@repo/ui/loader/linear-progress';
 import ProgressBar, { TypeProgressBar } from '@repo/ui/progressbar';
+import AppRadio from '@repo/ui/radio';
 import Status, { KIND_STATUS, TYPE_STATUS } from '@repo/ui/status';
+import { AppTextField } from '@repo/ui/text-field';
+import { DebugUtils } from '@repo/utils/debug-utils';
 import NameText from './components/NameText';
 import OpenDialog from './components/OpenDialog';
 import OpenToast from './components/OpenToast';
 import UserInfo from './components/UserInfo';
 
 const SamplePagePage = () => {
+  DebugUtils.logS('test sample page server render');
   return (
     <section className="size-full p-16">
       <NameText />
@@ -125,6 +130,21 @@ const SamplePagePage = () => {
           }
         ]}
       />
+      <div className="my-12">
+        <AppTextField />
+        <AppTextField type="password" />
+      </div>
+      <div className="my-12">
+        <AppDatePicker />
+      </div>
+      <div className="my-12">
+        <AppRadio
+          options={[
+            { value: 'Test1', label: 'Test1' },
+            { value: 'Test2', label: 'Test2' }
+          ]}
+        />
+      </div>
     </section>
   );
 };

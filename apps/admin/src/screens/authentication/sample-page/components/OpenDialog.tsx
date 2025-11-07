@@ -2,6 +2,8 @@
 
 import ButtonBase from '@repo/ui/button';
 import { showDialog, TYPE_ACTION, TYPE_MESSAGE } from '@repo/ui/dialog';
+import { DebugUtils } from '@repo/utils/debug-utils';
+import { testServerAction } from '../server/test-server';
 
 const OpenDialog = () => {
   return (
@@ -9,7 +11,8 @@ const OpenDialog = () => {
       <ButtonBase
         type="ghost"
         customContent="open dialog "
-        onClick={() =>
+        onClick={() => {
+          DebugUtils.logS('alert notify test run in client');
           showDialog({
             title: 'alert notify',
             content: 'text:functions_in_development',
@@ -19,13 +22,14 @@ const OpenDialog = () => {
                 title: 'text:close'
               }
             ]
-          })
-        }
+          });
+        }}
       />
       <ButtonBase
         type="primary"
         customContent="open dialog "
-        onClick={() =>
+        onClick={() => {
+          testServerAction();
           showDialog({
             title: 'alert notify',
             content: 'text:functions_in_development',
@@ -45,8 +49,8 @@ const OpenDialog = () => {
                 type: TYPE_ACTION.LINK
               }
             ]
-          })
-        }
+          });
+        }}
       />
     </>
   );
