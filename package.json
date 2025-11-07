@@ -8,6 +8,7 @@
     "build:dev": "turbo run build:dev",
     "build:prod": "turbo run build:prod",
     "start": "turbo run start",
+    "mock": "turbo run mock",
     "lint": "turbo run lint",
     "check-types": "turbo run check-types",
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
@@ -23,6 +24,7 @@
   "packageManager": "yarn@1.22.22",
   "workspaces": [
     "apps/*",
-    "packages/*"
+    "packages/*",
+    "_mock"
   ]
 }
