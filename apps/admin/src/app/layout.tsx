@@ -1,4 +1,4 @@
-import { roboto } from '@/utils/font';
+import { roboto } from '@/styles/font';
 import { Metadata } from 'next';
 import ProviderWrapper from './ProviderWrapper';
 
