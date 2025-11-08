@@ -3,7 +3,6 @@
 import ButtonBase from '@repo/ui/button';
 import { showDialog, TYPE_ACTION, TYPE_MESSAGE } from '@repo/ui/dialog';
 import { DebugUtils } from '@repo/utils/debug-utils';
-import { testServerAction } from '../server/test-server';
 
 const OpenDialog = () => {
   return (
@@ -29,7 +28,6 @@ const OpenDialog = () => {
         type="primary"
         customContent="open dialog "
         onClick={() => {
-          testServerAction();
           showDialog({
             title: 'alert notify',
             content: 'text:functions_in_development',

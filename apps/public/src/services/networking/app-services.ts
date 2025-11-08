@@ -1,8 +1,6 @@
 import { ENVConfig } from '@/config/env';
-import { ROUTES } from '@/config/routes';
 import { ApiResponse } from '@/types/common';
 import content from '@/utils/content';
-import { localStore } from '@repo/utils/local-storage';
 import axios, { AxiosError, AxiosRequestConfig, Method } from 'axios';
 
 // ==============================|| AXIOS - FOR APP SERVICES ||============================== //
@@ -12,10 +10,6 @@ function getAppServices() {
 
   appServices.interceptors.request.use(
     (config) => {
-      const token = localStore.get<string>('token', '');
-      if (token) {
-        config.headers['Authorization'] = `Bearer ${token}`;
-      }
       return config;
     },
     (error: Error) => {
@@ -28,13 +22,6 @@ function getAppServices() {
     (error: AxiosError<{ message?: string }>) => {
       if (!error.response) {
         return Promise.reject(error);
-      }
-      if (
-        [401, 403].includes(error.response.status) &&
-        !window.location.href.includes(ROUTES.LOGIN) &&
-        !window.location.href.includes(ROUTES.CHANGE_PASSWORD)
-      ) {
-        window.location.pathname = ROUTES.LOGIN;
       }
       return Promise.reject({
         ...error.response,
