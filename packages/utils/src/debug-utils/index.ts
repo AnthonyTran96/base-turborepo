@@ -19,4 +19,10 @@ export class DebugUtils {
       console.log(_params);
     }
   }
+
+  public static dir(_params?: any) {
+    if (this.isAllowDebug()) {
+      console.dir(_params);
+    }
+  }
 }

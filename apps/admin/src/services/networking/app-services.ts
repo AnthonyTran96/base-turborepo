@@ -52,7 +52,7 @@ export async function request<T>(
   url: string,
   data?: unknown,
   config?: AxiosRequestConfig
-): Promise<ApiResponse<T>> {
+): ApiResponse<T> {
   const appServices = getAppServices();
 
   switch (method) {

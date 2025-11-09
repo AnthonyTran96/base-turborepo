@@ -3,21 +3,19 @@ import { ApiResponse } from '@/types/common';
 import { ApiConstants } from './networking/app-apis';
 import { request } from './networking/app-services';
 
-async function login(params: LoginParams): Promise<ApiResponse<LoginResult | undefined>> {
+async function login(params: LoginParams): ApiResponse<LoginResult | undefined> {
   return request('post', ApiConstants.LOGIN, params).catch((error) => error);
 }
 
-async function changePassword(
-  params: ChangePasswordParams
-): Promise<ApiResponse<null | undefined>> {
+async function changePassword(params: ChangePasswordParams): ApiResponse<null | undefined> {
   return request('post', ApiConstants.CHANGE_PASSWORD, params).catch((error) => error);
 }
 
-async function logout(): Promise<ApiResponse<null | undefined>> {
+async function logout(): ApiResponse<null | undefined> {
   return request('post', ApiConstants.LOGOUT).catch((error) => error);
 }
 
-async function getProfile(): Promise<ApiResponse<ProfileResult | undefined>> {
+async function getProfile(): ApiResponse<ProfileResult | undefined> {
   return request('get', ApiConstants.PROFILE).catch((error) => error);
 }
 
