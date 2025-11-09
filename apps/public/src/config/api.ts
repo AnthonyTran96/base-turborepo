@@ -11,3 +11,5 @@ export const STATUS_ERROR_NETWORK = 'ERR_NETWORK';
 export const CODE_TIME_OUT = 408;
 export const LOAD_FAKE = false;
 export const HIDE_PILOT_FEATURE = ENVConfig.ENV === 'Production';
+export const SESSION_COOKIE_NAME = 'session';
+export const SESSION_MAX_AGE = 60 * 60 * 8;

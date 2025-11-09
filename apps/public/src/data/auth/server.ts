@@ -1,59 +1,40 @@
 'use server';
 
-import { ChangePasswordParams, LoginParams, LoginResult, ProfileResult } from '@/model/auth';
+import { ChangePasswordParams, LoginParams } from '@/model/auth';
 import authServices from '@/services/auth-services';
+import { SessionPayload, sessionService } from '@/utils/session';
 
-const login = async (
-  body: LoginParams,
-  onSuccess?: (data: LoginResult) => void,
-  onFailed?: (message: string) => void
-) => {
+export const loginAction = async (body: LoginParams) => {
   const result = await authServices.login(body);
   if (!result.success || !result.data) {
-    if (onFailed) return () => onFailed(result.message);
-    return;
+    return result;
   }
 
   const response = result.data;
-  if (onSuccess) return () => onSuccess(response);
+  const payload: SessionPayload = {
+    user: response.user,
+    accessToken: response.tokens.accessToken
+  };
+  const cookie = sessionService.createSessionCookie(payload);
+  sessionService.setSessionCookie(cookie);
+  return result;
 };
 
-const changePassword = async (
-  body: ChangePasswordParams,
-  onSuccess?: () => void,
-  onFailed?: (message: string) => void
-) => {
-  const result = await authServices.changePassword(body);
-
-  if (!result.success) {
-    if (onFailed) return () => onFailed(result.message);
-    return;
-  }
-
-  if (onSuccess) return () => onSuccess();
+export const changePasswordAction = async (body: ChangePasswordParams) => {
+  return authServices.changePassword(body);
 };
 
-const getProfile = async (onSuccess?: (data: ProfileResult) => void, onFailed?: () => void) => {
-  const result = await authServices.getProfile();
-
-  if (!result.success || !result.data) {
-    if (onFailed) return () => onFailed();
-    return;
-  }
-
-  const response = result.data;
-  if (onSuccess) return () => onSuccess(response);
+export const getProfileAction = async () => {
+  return authServices.getProfile();
 };
 
-const logout = async (onSuccess?: () => void, onFailed?: (message: string) => void) => {
+export const logoutAction = async () => {
   const result = await authServices.logout();
 
   if (!result.success) {
-    if (onFailed) return () => onFailed(result.message);
-    return;
+    return result;
   }
 
-  if (onSuccess) return () => onSuccess();
+  sessionService.clearSessionCookie();
+  return result;
 };
-
-export const authServer = { login, changePassword, getProfile, logout };
