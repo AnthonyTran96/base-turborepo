@@ -1,11 +1,13 @@
 'use server';
 
-import { ChangePasswordParams, LoginParams } from '@/model/auth';
+import { AuthTokens, ChangePasswordParams, LoginParams } from '@/model/auth';
 import authServices from '@/services/auth-services';
-import { SessionPayload, sessionService } from '@/utils/session';
+import { SessionPayload } from '@/types/session';
+import { sessionService } from '@/utils/session';
 
 export const loginAction = async (body: LoginParams) => {
   const result = await authServices.login(body);
+
   if (!result.success || !result.data) {
     return result;
   }
@@ -17,7 +19,7 @@ export const loginAction = async (body: LoginParams) => {
   };
   const cookie = sessionService.createSessionCookie(payload);
   sessionService.setSessionCookie(cookie);
-  return result;
+  return { ...result, data: { ...result.data, tokens: {} as AuthTokens } };
 };
 
 export const changePasswordAction = async (body: ChangePasswordParams) => {

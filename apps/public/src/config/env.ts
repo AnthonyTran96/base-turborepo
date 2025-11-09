@@ -1,3 +1,4 @@
+/* eslint-disable turbo/no-undeclared-env-vars */
 export const ENVConfig = {
   API_URL: process.env.LINK_API,
   API_PREFIX: process.env.API_PREFIX,

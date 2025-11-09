@@ -1,4 +1,5 @@
 import StyleProvider from '@/styles/StyleProvider';
+import { SessionProvider } from '@/utils/session/SessionProvider';
 import { AntdRegistry } from '@ant-design/nextjs-registry';
 import '@ant-design/v5-patch-for-react-19';
 import { DialogView } from '@repo/ui/dialog';
@@ -22,7 +23,7 @@ const ProviderWrapper = ({ children }: { children: ReactElement }) => {
             }
           }}
         >
-          {children}
+          <SessionProvider>{children}</SessionProvider>
           <ToastView />
           <DialogView />
         </ConfigProvider>

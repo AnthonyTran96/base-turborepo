@@ -21,10 +21,14 @@ function getAppServices() {
       config.headers['Cookie'] = `accessToken=${accessToken}`;
       DebugUtils.debug('=======================================>');
       DebugUtils.debug(`Request: ${config.url}`);
-      DebugUtils.debug(`Data:`);
-      DebugUtils.dir(config.data);
-      DebugUtils.debug(`Params:`);
-      DebugUtils.dir(config.params);
+      if (config.data) {
+        DebugUtils.debug(`Data:`);
+        DebugUtils.dir(config.data);
+      }
+      if (config.params) {
+        DebugUtils.debug(`Params:`);
+        DebugUtils.dir(config.params);
+      }
       DebugUtils.debug('=======================================>');
       return config;
     },
@@ -36,7 +40,7 @@ function getAppServices() {
   appServices.interceptors.response.use(
     (response) => {
       DebugUtils.debug('=======================================>');
-      DebugUtils.logS(`Response: ${response.config.url}`);
+      DebugUtils.debug(`Response: ${response.config.url}`);
       DebugUtils.debug('Data:');
       DebugUtils.dir(response.data);
       DebugUtils.debug('=======================================>');
@@ -44,7 +48,7 @@ function getAppServices() {
     },
     (error: AxiosError<{ message?: string }>) => {
       DebugUtils.debug('=======================================>');
-      DebugUtils.logS(`Response Error: ${error.config?.url}`);
+      DebugUtils.debug(`Response Error: ${error.config?.url}`);
       DebugUtils.debug(`Error ${error.response?.status}:`);
       DebugUtils.dir(error.response?.data);
       DebugUtils.debug('=======================================>');

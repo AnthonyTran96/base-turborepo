@@ -1,22 +1,25 @@
 import { ChangePasswordParams, LoginParams, LoginResult, ProfileResult } from '@/model/auth';
 import { ApiResponse } from '@/types/common';
 import { ApiConstants } from './networking/app-apis';
+import { sanitizeResponse } from './networking/app-helper';
 import { request } from './networking/app-services';
 
 async function login(params: LoginParams): ApiResponse<LoginResult | undefined> {
-  return request('post', ApiConstants.LOGIN, params).catch((error) => error);
+  return sanitizeResponse(request('post', ApiConstants.LOGIN, params).catch((error) => error));
 }
 
 async function changePassword(params: ChangePasswordParams): ApiResponse<null | undefined> {
-  return request('post', ApiConstants.CHANGE_PASSWORD, params).catch((error) => error);
+  return sanitizeResponse(
+    request('post', ApiConstants.CHANGE_PASSWORD, params).catch((error) => error)
+  );
 }
 
 async function logout(): ApiResponse<null | undefined> {
-  return request('post', ApiConstants.LOGOUT).catch((error) => error);
+  return sanitizeResponse(request('post', ApiConstants.LOGOUT).catch((error) => error));
 }
 
 async function getProfile(): ApiResponse<ProfileResult | undefined> {
-  return request('get', ApiConstants.PROFILE).catch((error) => error);
+  return sanitizeResponse(request('get', ApiConstants.PROFILE).catch((error) => error));
 }
 
 const authServices = {
