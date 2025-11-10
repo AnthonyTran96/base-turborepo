@@ -3,6 +3,8 @@ import '@/styles/global.scss';
 import type { Metadata } from 'next';
 import ProviderWrapper from './ProviderWrapper';
 
+export const dynamic = 'force-static';
+
 export const metadata: Metadata = {
   title: 'Anthony MonoRepo App Base',
   description: 'Anthony MonoRepo App Base'

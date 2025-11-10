@@ -10,6 +10,8 @@
     "build:dev": "env-cmd -f .env.dev next build",
     "build:prod": "env-cmd -f .env.prod next build",
     "start": "next start --port 3001",
+    "start:dev": "env-cmd -f .env.dev next start --port 3000",
+    "start:prod": "env-cmd -f .env.prod next start --port 3000",
     "lint": "next lint",
     "check-types": "tsc --noEmit"
   },

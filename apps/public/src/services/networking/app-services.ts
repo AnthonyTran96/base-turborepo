@@ -2,7 +2,7 @@ import { ENVConfig } from '@/config/env';
 import { ROUTES } from '@/config/routes';
 import { ApiResponse } from '@/types/common';
 import content from '@/utils/content';
-import { sessionService } from '@/utils/session';
+import { getServerSession } from '@/utils/session';
 import { DebugUtils } from '@repo/utils/debug-utils';
 import axios, { AxiosError, AxiosRequestConfig, Method } from 'axios';
 import { redirect } from 'next/navigation';
@@ -15,12 +15,12 @@ function getAppServices() {
 
   appServices.interceptors.request.use(
     async (config) => {
-      const session = await sessionService.getServerSession();
+      const session = await getServerSession();
       const accessToken = session?.accessToken;
       config.headers = config.headers || {};
       config.headers['Cookie'] = `accessToken=${accessToken}`;
       DebugUtils.debug('=======================================>');
-      DebugUtils.debug(`Request: ${config.url}`);
+      DebugUtils.debug(`Request: ${(ENVConfig.API_URL || '') + config.url}`);
       if (config.data) {
         DebugUtils.debug(`Data:`);
         DebugUtils.dir(config.data);
@@ -40,7 +40,7 @@ function getAppServices() {
   appServices.interceptors.response.use(
     (response) => {
       DebugUtils.debug('=======================================>');
-      DebugUtils.debug(`Response: ${response.config.url}`);
+      DebugUtils.debug(`Response: ${(ENVConfig.API_URL || '') + response.config.url}`);
       DebugUtils.debug('Data:');
       DebugUtils.dir(response.data);
       DebugUtils.debug('=======================================>');
@@ -48,7 +48,7 @@ function getAppServices() {
     },
     (error: AxiosError<{ message?: string }>) => {
       DebugUtils.debug('=======================================>');
-      DebugUtils.debug(`Response Error: ${error.config?.url}`);
+      DebugUtils.debug(`Response Error: ${(ENVConfig.API_URL || '') + (error.config?.url || '')}`);
       DebugUtils.debug(`Error ${error.response?.status}:`);
       DebugUtils.dir(error.response?.data);
       DebugUtils.debug('=======================================>');
