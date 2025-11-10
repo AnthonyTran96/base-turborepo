@@ -33,6 +33,12 @@
     },
     "start": {
       "dependsOn": ["^start"]
+    },
+    "start:dev": {
+      "dependsOn": ["^start:dev"]
+    },
+    "start:prod": {
+      "dependsOn": ["^start:pro"]
     }
   }
 }

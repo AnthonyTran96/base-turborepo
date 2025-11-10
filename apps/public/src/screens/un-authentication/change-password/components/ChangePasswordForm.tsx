@@ -1,53 +1,65 @@
 'use client';
 import content from '@/utils/content';
 import ButtonBase from '@repo/ui/button';
-import { AppTextFieldControl } from '@repo/ui/text-field/client';
+import { AppTextField } from '@repo/ui/text-field';
 import Spin from 'antd/es/spin';
 import useChangePassword from '../hooks/useChangePassword';
 
 const ChangePasswordForm = () => {
-  const { handleChangePassSubmit, changePasswordForm, loading } = useChangePassword();
   const {
-    control,
-    handleSubmit,
-    formState: { isValid }
-  } = changePasswordForm;
+    changePassForm,
+    email,
+    currentPassword,
+    newPassword,
+    onChangeEmail,
+    onChangeCurrentPassword,
+    onChangeNewPassword,
+    canSubmit
+  } = useChangePassword();
+
+  const { state, formAction, pending } = changePassForm;
 
   return (
-    <form onSubmit={handleSubmit(handleChangePassSubmit)}>
-      <AppTextFieldControl
+    <form action={formAction}>
+      <AppTextField
         wrapperClassName="mb-16"
         name="email"
+        value={email}
+        onChange={onChangeEmail}
         label={content.login_screen.email}
         placeholder={content.login_screen.enter_email}
         maxLength={64}
-        control={control}
+        error={state?.errors?.email?.[0]}
       />
-      <AppTextFieldControl
+      <AppTextField
         wrapperClassName="mb-20"
         name="currentPassword"
+        value={currentPassword}
+        onChange={onChangeCurrentPassword}
         label={content.login_screen.current_password}
         placeholder={content.login_screen.enter_password}
         maxLength={64}
-        control={control}
         type="password"
+        error={state?.errors?.currentPassword?.[0]}
       />
-      <AppTextFieldControl
+      <AppTextField
         wrapperClassName="mb-20"
         name="newPassword"
+        value={newPassword}
+        onChange={onChangeNewPassword}
         label={content.login_screen.new_password}
         placeholder={content.login_screen.enter_password}
         maxLength={64}
-        control={control}
         type="password"
+        error={state?.errors?.newPassword?.[0]}
       />
       <div className="bg-color-200 mb-20 h-[1px] w-full" />
       <ButtonBase
         htmlType="submit"
-        disabled={!isValid || loading}
+        disabled={!canSubmit || pending}
         type="primary"
         customContent={
-          loading ? (
+          pending ? (
             <div className="flex flex-row items-center justify-center">
               <div>{content.login_screen.change_password}</div>
               <div className="ml-8">

@@ -1,62 +1,55 @@
 import { ROUTES } from '@/config/routes';
-import { authActions } from '@/data/auth/actions';
-import { LoginParams } from '@/model/auth';
-import content from '@/utils/content';
-import { zodResolver } from '@hookform/resolvers/zod';
+import { showToast, TYPE_TOAST } from '@repo/ui/toast';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { z } from 'zod';
+import { ChangeEvent, useActionState, useEffect, useState } from 'react';
+import { LoginActionState } from '../schemas';
+import { handleLoginSubmit } from '../server/loginActions';
+
+const initialState: LoginActionState = {
+  success: false
+};
 
 export default function useLogin() {
   const router = useRouter();
-  const [loading, setLoading] = useState(false);
 
-  const loginSchema = z.object({
-    email: z
-      .string()
-      .trim()
-      .email({
-        message: content.login_screen.incorrect_format(content.login_screen.email.toLowerCase())
-      })
-      .min(1, { message: content.login_screen.required(content.login_screen.email) }),
-    password: z
-      .string()
-      .trim()
-      .min(8, {
-        message: content.login_screen.at_least_characters(content.login_screen.password, 8)
-      })
-  });
+  const [state, formAction, pending] = useActionState(handleLoginSubmit, initialState);
 
-  type LoginForm = z.infer<typeof loginSchema>;
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
 
-  const loginForm = useForm<LoginForm>({
-    mode: 'onTouched',
-    defaultValues: { email: '', password: '' },
-    resolver: zodResolver(loginSchema)
-  });
+  const canSubmit = email.trim().length >= 1 && password.trim().length >= 1;
+
+  const onChangeEmail = (e: ChangeEvent<HTMLInputElement>) => setEmail(e.target.value);
+
+  const onChangePassword = (e: ChangeEvent<HTMLInputElement>) => setPassword(e.target.value);
 
   const onLoginSuccess = () => {
     router.push(ROUTES.SAMPLE_PAGE);
-    setLoading(false);
   };
 
-  const onLoginFailed = () => {
-    setLoading(false);
+  const onLoginFailed = (message?: string) => {
+    if (message) showToast({ type: TYPE_TOAST.ERROR, content: message });
   };
 
-  const handleLoginSubmit = async (data: LoginForm) => {
-    const body: LoginParams = {
-      email: data.email,
-      password: data.password
-    };
-    setLoading(true);
-    authActions.login(body, onLoginSuccess, onLoginFailed);
-  };
+  useEffect(() => {
+    if (!state.success) {
+      onLoginFailed(state.message);
+      return;
+    }
+    onLoginSuccess();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [state]);
 
   return {
-    handleLoginSubmit,
-    loginForm,
-    loading
+    email,
+    password,
+    onChangeEmail,
+    onChangePassword,
+    loginForm: {
+      state,
+      formAction,
+      pending
+    },
+    canSubmit
   };
 }

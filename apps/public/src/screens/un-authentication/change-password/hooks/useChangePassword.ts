@@ -1,69 +1,65 @@
 import { ROUTES } from '@/config/routes';
-import { authActions } from '@/data/auth/actions';
-import { ChangePasswordParams } from '@/model/auth';
-import content from '@/utils/content';
-import { zodResolver } from '@hookform/resolvers/zod';
+import { showToast, TYPE_TOAST } from '@repo/ui/toast';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { z } from 'zod';
+import { ChangeEvent, useActionState, useEffect, useState } from 'react';
+import { ChangePassActionState } from '../schemas';
+import { handleChangePasswordSubmit } from '../server/changePasswordActions';
+
+const initialState: ChangePassActionState = {
+  success: false
+};
 
 export default function useChangePassword() {
   const router = useRouter();
-  const [loading, setLoading] = useState(false);
 
-  const changePasswordSchema = z.object({
-    email: z
-      .string()
-      .trim()
-      .email({
-        message: content.login_screen.incorrect_format(content.login_screen.email.toLowerCase())
-      })
-      .min(1, { message: content.login_screen.required(content.login_screen.email) }),
-    currentPassword: z
-      .string()
-      .trim()
-      .min(8, {
-        message: content.login_screen.at_least_characters(content.login_screen.password, 8)
-      }),
-    newPassword: z
-      .string()
-      .trim()
-      .min(8, {
-        message: content.login_screen.at_least_characters(content.login_screen.password, 8)
-      })
-  });
+  const [state, formAction, pending] = useActionState(handleChangePasswordSubmit, initialState);
 
-  type ChangePasswordForm = z.infer<typeof changePasswordSchema>;
+  const [email, setEmail] = useState<string>('');
+  const [currentPassword, setCurrentPassword] = useState<string>('');
+  const [newPassword, setNewPassword] = useState<string>('');
 
-  const changePasswordForm = useForm<ChangePasswordForm>({
-    mode: 'onTouched',
-    defaultValues: { email: '', currentPassword: '', newPassword: '' },
-    resolver: zodResolver(changePasswordSchema)
-  });
+  const canSubmit =
+    email.trim().length >= 1 &&
+    currentPassword.trim().length >= 1 &&
+    newPassword.trim().length >= 1;
 
-  const onLoginSuccess = () => {
+  const onChangeEmail = (e: ChangeEvent<HTMLInputElement>) => setEmail(e.target.value);
+
+  const onChangeCurrentPassword = (e: ChangeEvent<HTMLInputElement>) =>
+    setCurrentPassword(e.target.value);
+
+  const onChangeNewPassword = (e: ChangeEvent<HTMLInputElement>) => setNewPassword(e.target.value);
+
+  const onChangePassSuccess = (message?: string) => {
+    if (message) showToast({ type: TYPE_TOAST.SUCCESS, content: message });
     router.push(ROUTES.LOGIN);
-    setLoading(false);
   };
 
-  const onLoginFailed = () => {
-    setLoading(false);
+  const onChangePassFailed = (message?: string) => {
+    if (message) showToast({ type: TYPE_TOAST.ERROR, content: message });
   };
 
-  const handleChangePassSubmit = async (data: ChangePasswordForm) => {
-    const body: ChangePasswordParams = {
-      email: data.email,
-      currentPassword: data.currentPassword,
-      newPassword: data.newPassword
-    };
-    setLoading(true);
-    authActions.changePassword(body, onLoginSuccess, onLoginFailed);
-  };
+  useEffect(() => {
+    if (!state.success) {
+      onChangePassFailed(state.message);
+      return;
+    }
+    onChangePassSuccess(state.message);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [state]);
 
   return {
-    handleChangePassSubmit,
-    changePasswordForm,
-    loading
+    email,
+    currentPassword,
+    newPassword,
+    onChangeEmail,
+    onChangeCurrentPassword,
+    onChangeNewPassword,
+    changePassForm: {
+      state,
+      formAction,
+      pending
+    },
+    canSubmit
   };
 }
