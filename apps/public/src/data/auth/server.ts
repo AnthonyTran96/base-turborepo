@@ -3,7 +3,7 @@
 import { AuthTokens, ChangePasswordParams, LoginParams } from '@/model/auth';
 import authServices from '@/services/auth-services';
 import { SessionPayload } from '@/types/session';
-import { sessionService } from '@/utils/session';
+import { clearSessionCookie, createSessionCookie, setSessionCookie } from '@/utils/session';
 
 export const loginAction = async (body: LoginParams) => {
   const result = await authServices.login(body);
@@ -17,8 +17,8 @@ export const loginAction = async (body: LoginParams) => {
     user: response.user,
     accessToken: response.tokens.accessToken
   };
-  const cookie = sessionService.createSessionCookie(payload);
-  sessionService.setSessionCookie(cookie);
+  const cookie = createSessionCookie(payload);
+  setSessionCookie(cookie);
   return { ...result, data: { ...result.data, tokens: {} as AuthTokens } };
 };
 
@@ -37,6 +37,6 @@ export const logoutAction = async () => {
     return result;
   }
 
-  sessionService.clearSessionCookie();
+  clearSessionCookie();
   return result;
 };

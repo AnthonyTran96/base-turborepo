@@ -2,7 +2,7 @@ import { ENVConfig } from '@/config/env';
 import { ROUTES } from '@/config/routes';
 import { ApiResponse } from '@/types/common';
 import content from '@/utils/content';
-import { sessionService } from '@/utils/session';
+import { getServerSession } from '@/utils/session';
 import { DebugUtils } from '@repo/utils/debug-utils';
 import axios, { AxiosError, AxiosRequestConfig, Method } from 'axios';
 import { redirect } from 'next/navigation';
@@ -15,7 +15,7 @@ function getAppServices() {
 
   appServices.interceptors.request.use(
     async (config) => {
-      const session = await sessionService.getServerSession();
+      const session = await getServerSession();
       const accessToken = session?.accessToken;
       config.headers = config.headers || {};
       config.headers['Cookie'] = `accessToken=${accessToken}`;
