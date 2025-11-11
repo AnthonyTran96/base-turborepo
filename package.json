@@ -8,6 +8,8 @@
     "build:dev": "turbo run build:dev",
     "build:prod": "turbo run build:prod",
     "start": "turbo run start",
+    "start:dev": "turbo run start:dev",
+    "start:prod": "turbo run start:prod",
     "mock": "turbo run mock",
     "lint": "turbo run lint",
     "check-types": "turbo run check-types",

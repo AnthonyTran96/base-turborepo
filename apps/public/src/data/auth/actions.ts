@@ -1,6 +1,7 @@
 import { ChangePasswordParams, LoginParams, LoginResult, ProfileResult } from '@/model/auth';
 import { showToast, TYPE_TOAST } from '@repo/ui/toast';
 import { mutate } from 'swr';
+import { postActions } from '../post/actions';
 import { userActions } from '../user/actions';
 import { changePasswordAction, getProfileAction, loginAction, logoutAction } from './server';
 import { AUTH_KEY, initialAuth } from './types';
@@ -71,6 +72,7 @@ const logout = async (onSuccess?: () => void, onFailed?: () => void) => {
 const clearStore = () => {
   reset();
   userActions.reset();
+  postActions.reset();
 };
 
 export const authActions = { reset, login, changePassword, getProfile, logout, clearStore };
