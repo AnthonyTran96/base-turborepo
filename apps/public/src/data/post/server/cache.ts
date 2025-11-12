@@ -6,7 +6,7 @@ export const getPostsAction = unstable_cache(
   async () => {
     const result = await postServices.getPosts();
     if (!result.success) {
-      throw new Error('Error Fetch Posts ');
+      throw new Error('Error Fetch Posts');
     }
     return result.data || [];
   },
