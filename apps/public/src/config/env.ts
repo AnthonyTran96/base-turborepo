@@ -5,5 +5,8 @@ export const ENVConfig = {
   LINK_CMS: process.env.LINK_CMS,
   VERSION_NAME: process.env.VERSION_NAME,
   ENV: process.env.ENV,
-  SESSION_SECRET: process.env.SESSION_SECRET
+  SESSION_SECRET: process.env.SESSION_SECRET,
+  REVALIDATE_SECRET: process.env.REVALIDATE_SECRET,
+  REVALIDATE_ISS: process.env.REVALIDATE_ISS,
+  REVALIDATE_AUD: process.env.REVALIDATE_AUD
 };

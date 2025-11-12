@@ -1,82 +1,67 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import crypto from 'crypto';
+import jwt from 'jsonwebtoken';
 import { clearCookie, getCookie, setCookie } from '../cookie';
+import { DebugUtils } from '../debug-utils';
+
+type JwtPayloadWithExp = {
+  exp: number; // seconds since epoch
+  iat?: number;
+  [k: string]: any;
+};
 
 /**
- * Generic session service for cookie-based sessions.
+ * Generic session service using JWT (HS256)
  *
- * TPayload: shape of payload WITHOUT exp (we add exp automatically)
+ * TPayload: shape of payload WITHOUT exp (we add exp via options)
  * TSession: payload + exp
  */
 export class SessionService<TPayload extends Record<string, any>> {
   private cookieName: string;
   private maxAgeSeconds: number;
   private secret: string;
+  private algorithm: jwt.Algorithm;
 
-  constructor(options: { cookieName: string; maxAgeSeconds: number; secret: string }) {
+  constructor(options: {
+    cookieName: string;
+    maxAgeSeconds: number;
+    secret: string;
+    algorithm?: jwt.Algorithm;
+  }) {
     this.cookieName = options.cookieName;
     this.maxAgeSeconds = options.maxAgeSeconds;
     this.secret = options.secret;
-  }
-
-  // helper base64url
-  private b64url(input: Buffer | string) {
-    return Buffer.from(input)
-      .toString('base64')
-      .replace(/\+/g, '-')
-      .replace(/\//g, '_')
-      .replace(/=+$/g, '');
-  }
-
-  private sign(data: string) {
-    return this.b64url(crypto.createHmac('sha256', this.secret).update(data).digest());
+    this.algorithm = options.algorithm ?? 'HS256';
   }
 
   /**
-   * Create signed cookie value from payload (payload does NOT include exp)
+   * Create a signed JWT string from payload (payload does NOT include exp)
    */
-  public createSessionCookie(payload: TPayload) {
-    const body = {
-      ...payload,
-      exp: Math.floor(Date.now() / 1000) + this.maxAgeSeconds
-    } as TPayload & { exp: number };
-
-    const json = JSON.stringify(body);
-    const bodyB64 = this.b64url(json);
-    const sig = this.sign(bodyB64);
-    return `${bodyB64}.${sig}`;
+  public createSessionCookie(payload: TPayload): string {
+    // jsonwebtoken will add iat and exp for us if expiresIn provided
+    const token = jwt.sign(payload as object, this.secret, {
+      algorithm: this.algorithm,
+      expiresIn: this.maxAgeSeconds // seconds
+    });
+    return token;
   }
 
   /**
-   * Verify cookie value (bodyB64.sig)
+   * Verify JWT token value (cookieValue)
    * Returns payload with exp (typed) or null
    */
-  public verifySessionCookie(cookieValue?: string): (TPayload & { exp: number }) | null {
+  public verifySessionCookie(cookieValue?: string): (TPayload & JwtPayloadWithExp) | null {
     if (!cookieValue) return null;
-    const [bodyB64, sig] = cookieValue.split('.');
-    if (!bodyB64 || !sig) return null;
-
-    const expected = this.sign(bodyB64);
-
     try {
-      const a = Buffer.from(expected);
-      const b = Buffer.from(sig);
-      // lengths must match for timingSafeEqual
-      if (a.length !== b.length) return null;
-      if (!crypto.timingSafeEqual(a, b)) return null;
-    } catch {
-      return null;
-    }
-
-    try {
-      // decode base64url -> utf8 json
-      const padded = bodyB64.replace(/-/g, '+').replace(/_/g, '/');
-      const json = Buffer.from(padded, 'base64').toString('utf8');
-      const data = JSON.parse(json) as TPayload & { exp: number };
-      if (!data.exp || typeof data.exp !== 'number') return null;
-      if (data.exp < Math.floor(Date.now() / 1000)) return null;
-      return data;
-    } catch {
+      // throws on invalid/expired token
+      const decoded = jwt.verify(cookieValue, this.secret, {
+        algorithms: [this.algorithm]
+      }) as JwtPayloadWithExp & TPayload;
+      // Ensure exp exists and is a number
+      if (!decoded || typeof decoded.exp !== 'number') return null;
+      return decoded as TPayload & JwtPayloadWithExp;
+    } catch (err) {
+      DebugUtils.logS(err);
+      // Token invalid or expired
       return null;
     }
   }
@@ -87,14 +72,16 @@ export class SessionService<TPayload extends Record<string, any>> {
    */
   public async getServerSession() {
     const raw = await getCookie(this.cookieName);
-    return this.verifySessionCookie(raw);
+    return this.verifySessionCookie(raw ?? undefined);
   }
 
   /**
    * Set session cookie on response (HttpOnly, Secure, SameSite=Lax)
-   * value should be a cookie string created by createSessionCookie
+   * value should be a JWT string created by createSessionCookie
    */
   public async setSessionCookie(value: string) {
+    // setCookie helper should set httpOnly, secure, path, maxAge etc.
+    // store cookie value as the raw JWT token
     setCookie(this.cookieName, value, this.maxAgeSeconds);
   }
 
