@@ -18,7 +18,7 @@ export const POST = withAuth(async (_, __, ctx) => {
         status: 400
       });
     }
-    await Promise.all([refreshPostWithId(Number(params.id)), refreshPosts()]);
+    await Promise.all([refreshPostWithId(Number(params.postId)), refreshPosts()]);
     return new NextResponse(JSON.stringify({ success: true }), {
       status: 201
     });

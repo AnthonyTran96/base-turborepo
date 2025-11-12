@@ -1,12 +1,12 @@
 import { ROUTES } from '@/config/routes';
 import { refreshPosts } from '@/data/post/server';
-import { getPostsAction } from '@/data/post/server/cache';
+import { getPosts } from '@/data/post/server/cache';
 import ButtonBase from '@repo/ui/button';
 import { TextBase } from '@repo/ui/text';
 import Link from 'next/link';
 
 const PostList = async () => {
-  const posts = await getPostsAction();
+  const posts = await getPosts();
 
   return (
     <div className="mt-8">
