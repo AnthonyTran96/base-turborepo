@@ -8,9 +8,11 @@
     "dev:mock": "env-cmd -f .env.mock next dev --port 3001",
     "build": "next build",
     "build:dev": "env-cmd -f .env.dev next build",
+    "build:mock": "env-cmd -f .env.mock next build",
     "build:prod": "env-cmd -f .env.prod next build",
     "start": "next start --port 3001",
     "start:dev": "env-cmd -f .env.dev next start --port 3001",
+    "start:mock": "env-cmd -f .env.mock next start --port 3001",
     "start:prod": "env-cmd -f .env.prod next start --port 3001",
     "lint": "next lint",
     "check-types": "tsc --noEmit"

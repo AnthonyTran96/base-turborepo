@@ -26,6 +26,11 @@
       "inputs": ["$TURBO_DEFAULT$", ".env*"],
       "outputs": ["dist/**", ".next/**", "!.next/cache/**"]
     },
+    "build:mock": {
+      "dependsOn": ["^build:mock"],
+      "inputs": ["$TURBO_DEFAULT$", ".env*"],
+      "outputs": ["dist/**", ".next/**", "!.next/cache/**"]
+    },
     "build:prod": {
       "dependsOn": ["^build:prod"],
       "inputs": ["$TURBO_DEFAULT$", ".env*"],
@@ -37,8 +42,11 @@
     "start:dev": {
       "dependsOn": ["^start:dev"]
     },
+    "start:mock": {
+      "dependsOn": ["^start:mock"]
+    },
     "start:prod": {
-      "dependsOn": ["^start:pro"]
+      "dependsOn": ["^start:prod"]
     }
   }
 }

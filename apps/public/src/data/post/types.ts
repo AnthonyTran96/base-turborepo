@@ -8,4 +8,4 @@ export const POSTS_TAG = 'posts';
 
 export const POST_WITH_ID_TAG = 'post-with-id';
 
-export const POSTS_REVALIDATE = 60 * 15;
+export const POSTS_REVALIDATE = 60;

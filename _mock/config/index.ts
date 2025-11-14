@@ -1,5 +1,6 @@
 import { MockApiConfig } from '@/types';
 import { mockAuthApis } from './auth';
+import { mockPostApis } from './post';
 
 const mockConfig: MockApiConfig[] = [
   {
@@ -17,7 +18,8 @@ const mockConfig: MockApiConfig[] = [
     }
   },
   // Thêm các endpoint ở đây
-  ...mockAuthApis
+  ...mockAuthApis,
+  ...mockPostApis
 ];
 
 export default mockConfig;
