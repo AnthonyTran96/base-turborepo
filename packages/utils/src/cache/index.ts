@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { unstable_cache } from 'next/cache';
+import { cache as reactCache } from 'react';
 
 /**
  * A stable stringify implementation for building deterministic cache keys.
@@ -50,13 +51,6 @@ export class ServerCacheService {
   /** In-flight request map (cacheKey => Promise) */
   private inFlight = new Map<string, Promise<any>>();
 
-  /** Default revalidate time (seconds) */
-  private defaultRevalidate: number | false;
-
-  constructor(defaultRevalidate: number | false = 60) {
-    this.defaultRevalidate = defaultRevalidate;
-  }
-
   /**
    * Builds a unique cache key from baseKey + params using stable stringify.
    */
@@ -96,7 +90,7 @@ export class ServerCacheService {
         [cacheKey],
         {
           tags: options?.tags ? options.tags(params as TParams) : [baseKey],
-          revalidate: options?.revalidate ?? this.defaultRevalidate
+          revalidate: options?.revalidate
         }
       );
 
@@ -114,6 +108,27 @@ export class ServerCacheService {
       this.inFlight.set(cacheKey, p);
       return p;
     };
+  }
+
+  /**
+   * Creates a deduped function using React.cache for in-process memoization.
+   * This avoids duplicate calls within the same render or request.
+   *
+   * Example:
+   * const getPosts = cacheService.createDedupe(async () => {...})
+   * const getUserById = cacheService.createDedupe(async (id) => {...})
+   *
+   * Notes:
+   * - React.cache provides dedupe-only behavior (no revalidate, no tags).
+   * - Useful for preventing repeated calls in Server Components without using Next.js Data Cache.
+   *
+   * Returns: async (...params) => TResult
+   */
+  public createDedupe<TParams extends any[], TResult>(
+    fn: (...args: TParams) => Promise<TResult>
+  ): (...args: TParams) => Promise<TResult> {
+    // wrap with react.cache once
+    return reactCache(async (...args: TParams) => fn(...args));
   }
 
   /**

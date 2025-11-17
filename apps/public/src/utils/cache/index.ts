@@ -4,6 +4,8 @@ const cacheService = new ServerCacheService();
 
 export const createCache = cacheService.createCache.bind(cacheService);
 
+export const createDedupe = cacheService.createDedupe.bind(cacheService);
+
 export const clearAllInFlight = cacheService.clearAllInFlight.bind(cacheService);
 
 export const clearInFlightForKey = cacheService.clearInFlightForKey.bind(cacheService);
